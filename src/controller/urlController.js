@@ -53,7 +53,9 @@ const isValid = (value) => {
 
 
          let catchedUrl=await GET_ASYNC(`${longUrl}`)
-        
+         if (catchedUrl) {
+            return res.status(200).send({ status: true,msg:"recived from Cache",data: JSON.parse(catchedUrl) })//---if already exist
+        }
         if(validUrl.isUri(longUrl)) {
             let url = await urlModel.findOne({longUrl: longUrl}).select({_id:0, updatedAt:0, createdAt:0, _v:0})
             if(url) {
